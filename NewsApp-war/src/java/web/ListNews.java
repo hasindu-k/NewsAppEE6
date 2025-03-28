@@ -50,11 +50,12 @@ public class ListNews extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath () + "</h1>");
 
-            List news = newsEntityFacade.findAll();
+            List news = newsEntityFacade.findAllSortedDesc();
 for (Iterator it = news.iterator(); it.hasNext();) {
     NewsEntity elem = (NewsEntity) it.next();
     out.println(" <b>"+elem.getTitle()+" </b><br />");
     out.println(elem.getBody()+"<br /> ");
+    out.println("<i>Published on: " + elem.getDate()+ "</i><br /><br/>");
 }
 out.println("<a href='PostMessage'>Add new message</a>");
 

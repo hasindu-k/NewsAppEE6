@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ejb;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,9 +20,16 @@ import javax.persistence.criteria.Root;
  * @author nb
  */
 @Stateless
+@PermitAll
 public class NewsEntityFacade {
+
     @PersistenceContext(unitName = "NewsApp-ejbPU")
     private EntityManager em;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("NewsEntityFacade bean has been initialized.");
+    }
 
     public void create(NewsEntity newsEntity) {
         em.persist(newsEntity);
@@ -42,6 +51,12 @@ public class NewsEntityFacade {
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(NewsEntity.class));
         return em.createQuery(cq).getResultList();
+    }
+
+    public List<NewsEntity> findAllSortedDesc() {
+        List<NewsEntity> newsList = findAll();
+        Collections.sort(newsList, new NewsComparator());
+        return newsList;
     }
 
     public List<NewsEntity> findRange(int[] range) {
