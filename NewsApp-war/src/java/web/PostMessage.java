@@ -4,9 +4,10 @@
  */
 package web;
 
-import ejb.NewsEntity;
+import ejb.NewsEntity2;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -54,10 +55,11 @@ public class PostMessage extends HttpServlet {
                 MessageProducer messageProducer = session.createProducer(queue);
 
                 ObjectMessage message = session.createObjectMessage();
-                // here we create NewsEntity, that will be sent in JMS message
-                NewsEntity e = new NewsEntity();
+                // here we create NewsEntity2, that will be sent in JMS message
+                NewsEntity2 e = new NewsEntity2();
                 e.setTitle(title);
                 e.setBody(body);
+                e.setDate(new Date());
 
                 message.setObject(e);
                 messageProducer.send(message);

@@ -5,8 +5,8 @@
 
 package web;
 
-import ejb.NewsEntity;
-import ejb.NewsEntityFacade;
+import ejb.NewsEntity2;
+import ejb.NewsEntityFacade2;
 import ejb.SessionManagerBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,7 +28,7 @@ public class ListNews extends HttpServlet {
     @EJB
     private SessionManagerBean sessionManagerBean;
     @EJB
-    private NewsEntityFacade newsEntityFacade;
+    private NewsEntityFacade2 newsEntityFacade2;
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -50,11 +50,13 @@ public class ListNews extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath () + "</h1>");
 
-            List news = newsEntityFacade.findAll();
+            List news = newsEntityFacade2.findAll();
 for (Iterator it = news.iterator(); it.hasNext();) {
-    NewsEntity elem = (NewsEntity) it.next();
+    NewsEntity2 elem = (NewsEntity2) it.next();
     out.println(" <b>"+elem.getTitle()+" </b><br />");
     out.println(elem.getBody()+"<br /> ");
+    // Display the date of the news item
+    out.println("Date: " + elem.getDate() + "<br /><br />");
 }
 out.println("<a href='PostMessage'>Add new message</a>");
 

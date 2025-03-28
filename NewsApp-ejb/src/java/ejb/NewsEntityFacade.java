@@ -6,6 +6,7 @@
 package ejb;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +22,12 @@ import javax.persistence.criteria.Root;
 public class NewsEntityFacade {
     @PersistenceContext(unitName = "NewsApp-ejbPU")
     private EntityManager em;
-
+    
+    //postConstruct method
+    @PostConstruct
+    public void init(){
+        System.out.println("NewsEntityFacade has been initialized");
+    }
     public void create(NewsEntity newsEntity) {
         em.persist(newsEntity);
     }

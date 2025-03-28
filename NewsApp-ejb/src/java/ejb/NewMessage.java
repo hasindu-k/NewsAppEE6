@@ -40,7 +40,7 @@ public class NewMessage implements MessageListener {
     try {
         if (message instanceof ObjectMessage) {
             msg = (ObjectMessage) message;
-            NewsEntity e = (NewsEntity) msg.getObject();
+            NewsEntity2 e = (NewsEntity2) msg.getObject();
             save(e);
         }
     } catch (JMSException e) {
